@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Medieval Civilization Selection</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Check the path to your stylesheet -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        body {
+            font-family: 'MedievalFont', serif;
+            background-color: #251c12;
+            color: #f7dfc4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 5px solid #8A5C2E;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        h1, h2, h3 {
+            color: #FFD700;
+        }
+
+        .civilization-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .civilization-container a {
+            border: 5px solid #532c08;
+            display: inline-block;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .civilization-container a:hover {
+            background-color: #532c08;
+        }
+
+        .civilization-container img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #8A5C2E;
+            border-radius: 10px;
+        }
+
+        .civilization-container h3 {
+            margin-top: 10px;
+        }
+
+        @font-face {
+            font-family: 'MedievalFont';
+            src: url('your-medieval-font.woff') format('woff');
+        }
+
+        @media screen and (max-width: 768px) {
+            /* Adjust image size for screens up to 768px wide (typical mobile screens) */
+            .civilization-container a {
+                padding: 10px;
+                margin: 10px;
+            }
+
+            .civilization-container img {
+                max-width: 80%;
+                height: auto;
+            }
+        }
+
+       /* Confirmation Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+        background-color: #251c12;
+        color: #f7dfc4;
+        margin: 10% auto;
+        padding: 20px;
+        border: 2px solid #8A5C2E;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .close {
+        color: #FFD700;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #FFA500;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    button {
+        background-color: #8A5C2E;
+        color: #f7dfc4;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #532c08;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Medieval Clicker</h1>
+        <h2>Choose Your Civilization</h2>
+        <div class="civilization-container">
+            <!-- Civilization 1: Knight -->
+            <a href="#" onclick="showConfirmationModal('knight')" title="Select Knight Civilization">
+                <img src="knight.png" alt="Knight Civilization">
+                <h3>Knight</h3>
+            </a>
+
+            <!-- Civilization 2: Lord -->
+            <a href="#" onclick="showConfirmationModal('lord')" title="Select Lord Civilization">
+                <img src="lord.png" alt="Lord Civilization">
+                <h3>Lord</h3>
+            </a>
+
+            <!-- Civilization 3: Wizard -->
+            <a href="#" onclick="showConfirmationModal('wizard')" title="Select Wizard Civilization">
+                <img src="wizard.png" alt="Wizard Civilization">
+                <h3>Wizard</h3>
+            </a>
+
+            <!-- Civilization 4: Paladin -->
+            <a href="#" onclick="showConfirmationModal('paladin')" title="Select Paladin Civilization">
+                <img src="paladin.png" alt="Paladin Civilization">
+                <h3>Paladin</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideConfirmationModal()">&times;</span>
+            <h2>Confirm Civilization Selection</h2>
+            <p>Are you sure you want to choose this civilization?</p>
+            <p>This action cannot be undone.</p>
+            <button onclick="confirmCivilizationSelection()">Yes, I'm sure</button>
+        </div>
+    </div>
+
+    <script>
+        function showConfirmationModal(civilization) {
+            // Display the confirmation modal
+            document.getElementById("confirmationModal").style.display = "block";
+
+            // Set the selected civilization in a data attribute for later use
+            document.getElementById("confirmationModal").setAttribute("data-civilization", civilization);
+        }
+
+        function hideConfirmationModal() {
+            // Hide the confirmation modal
+            document.getElementById("confirmationModal").style.display = "none";
+        }
+
+        function confirmCivilizationSelection() {
+            // Get the selected civilization from the data attribute
+            const civilization = document.getElementById("confirmationModal").getAttribute("data-civilization");
+
+            // Save the selected civilization to local storage and redirect
+            localStorage.setItem("chosenCivilization", civilization);
+            window.location.href = `game_${civilization}.html`;
+
+            // Close the confirmation modal
+            hideConfirmationModal();
+        }
+         // Function to select a civilization and save it to local storage
+        function selectCivilization(civilization) {
+            localStorage.setItem("chosenCivilization", civilization);
+            window.location.href = `game_${civilization}.html`;
+        }
+
+        // Function to load the selected civilization from local storage
+        function loadSelectedCivilization() {
+            const chosenCivilization = localStorage.getItem("chosenCivilization");
+            if (chosenCivilization) {
+                window.location.href = `game_${chosenCivilization}.html`;
+            }
+        }
+
+        // Call the loadSelectedCivilization function when the page loads
+        window.onload = loadSelectedCivilization;
+    </script>
+</body>
+</html>
